@@ -1,0 +1,54 @@
+<div class="d-flex flex-wrap">
+	<div class="col-12 col-lg-6 mb-3">
+		<h3>My phone book</h3>
+		<h4>New contact</h4>
+		<form class="px-2 py-3 bg-grey" [formGroup]="this.phoneBookService.form" (ngSubmit)="onSubmit()">
+			<input type="hidden" formControlName="$key">
+			<div class="d-flex flex-wrap pt-2">	
+				<div class="from-group col-6">
+					<label>First Name</label>
+					<input formControlName="firstName" class="form-control">
+				</div>
+				<div class="from-group col-6">
+					<label>Last Name</label>
+					<input formControlName="lastName" class="form-control">
+				</div>
+			</div>
+			<div class="from-group col-12 pt-3 pb-1">
+				<label>Phone number:</label>
+				<input formControlName="phoneNumber" class="form-control">
+			</div>
+			<div class="py-4 text-center">
+				&nbsp;<span class="alert alert-info" *ngIf="showSuccessMessage">Submitted successfully.</span>
+				<span class="alert alert-info" *ngIf="showUpdateMessage">Updated successfully.</span>
+				<span class="alert alert-danger" *ngIf="showDeletedMessage">Deleted successfully.</span>
+			</div>
+			<div class="from-group col-12 text-center pt-1">
+				<input type="submit" class="btn btn-success" value="Add contact">
+			</div>
+
+		</form>
+	</div>
+	<div class="col-12 col-lg-6">
+		<form class="form-inline bg-lightgrey justify-content-between">
+        	<input name="searchInput" id="search" class="form-control bg-grey text-light" placeholder="Name" #searchInput="ngModel" [(ngModel)]="searchText" style="width: 75%;">
+        	<button class="btn btn-dark" id="filter" (click)="toggleFilter()" style="width: 22%;">Filter off</button>
+		</form>
+				
+		<h4>Contacts</h4>
+		<table  [@listStagger]="phoneBookArray" class="table table-sm table-striped table-dark">
+			<tbody>
+				<ng-container *ngFor="let phoneBook of phoneBookArray">
+					<tr *ngIf="filterCondition(phoneBook)" >
+						<td class="align-middle">{{phoneBook.firstName}} {{phoneBook.lastName}}</td>
+						<td class="align-middle">{{phoneBook.phoneNumber}}</td>
+						<td class="text-right">
+							<button class="btn btn-success btn-xs mr-2" (click)="phoneBookService.populateForm(phoneBook)">Edit</button>
+							<button class="btn btn-danger btn-xs my-1" (click)="onDelete(phoneBook.$key)">Delete</button>
+						</td>
+					</tr>
+				</ng-container>
+			</tbody>
+		</table>
+	</div>
+</div>
