@@ -12,20 +12,17 @@ import { trigger,style,transition,animate,keyframes,query,stagger } from '@angul
         query(
           ':enter',
           [
-            style({ opacity: 0, transform: 'translateY(-15px)' }),
+            style({ opacity: 0, transform: 'translateY(-15px) translateX(50px)' }),
             stagger(
-              '50ms',
+              '100ms',
               animate(
                 '750ms ease-out',
-                style({ opacity: 1, transform: 'translateY(0px)' })
+              style({ opacity: 1, transform: 'translateY(0px)' })
               )
             )
           ],
           { optional: true }
         ),
-        query(':leave', animate('500ms', style({ opacity: 0 })), {
-          optional: true
-        })
       ])
     ])
   ]
@@ -40,6 +37,7 @@ export class MyPhoneBookComponent implements OnInit {
   showSuccessMessage: boolean;
   showUpdateMessage: boolean;
   showDeletedMessage : boolean;
+  showErrorMessage: boolean;
   searchText:string = "";
   filter:boolean = false;
 
@@ -72,7 +70,10 @@ export class MyPhoneBookComponent implements OnInit {
         this.submitted = false;
         this.phoneBookService.form.reset()
   		}
-  	}
+  	} else {
+      this.showErrorMessage = true;
+      setTimeout(()=>this.showErrorMessage=false,3000);
+    }
   }
 
   onDelete($key){

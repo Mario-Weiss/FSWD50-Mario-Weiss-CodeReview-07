@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-nav',
@@ -15,6 +16,7 @@ export class NavComponent implements OnInit {
     ;
   }
   ngOnInit() {
+    $(".nav-link").click(function () { $(".collapse").collapse("hide"); });
   }
 
 }

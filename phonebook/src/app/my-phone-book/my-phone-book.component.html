@@ -1,29 +1,35 @@
 <div class="d-flex flex-wrap">
 	<div class="col-12 col-lg-6 mb-3">
 		<h3>My phone book</h3>
-		<h4>New contact</h4>
+		<h4 class="pt-2">New contact</h4>
 		<form class="px-2 py-3 bg-grey" [formGroup]="this.phoneBookService.form" (ngSubmit)="onSubmit()">
 			<input type="hidden" formControlName="$key">
 			<div class="d-flex flex-wrap pt-2">	
-				<div class="from-group col-6">
+				<div class="form-group col-6">
 					<label>First Name</label>
-					<input formControlName="firstName" class="form-control">
+					<input formControlName="firstName" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.firstName.errors}">
+					<div class="invalid-feedback text-center" *ngIf="submitted && formControls.firstName.errors">This field is required</div>
 				</div>
-				<div class="from-group col-6">
+              	
+				<div class="form-group col-6">
 					<label>Last Name</label>
-					<input formControlName="lastName" class="form-control">
+					<input formControlName="lastName" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.lastName.errors}">
+					<div class="invalid-feedback text-center" *ngIf="submitted && formControls.lastName.errors">This field is required</div>
 				</div>
+				
 			</div>
-			<div class="from-group col-12 pt-3 pb-1">
+			<div class="form-group col-12 pt-3 pb-1">
 				<label>Phone number:</label>
-				<input formControlName="phoneNumber" class="form-control">
+				<input formControlName="phoneNumber" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.phoneNumber.errors}">
+				<div class="invalid-feedback text-center" *ngIf="submitted && formControls.phoneNumber.errors"><label *ngIf="formControls.phoneNumber.errors.required">This field is required</label><label *ngIf="formControls.phoneNumber.errors.minlength">Please enter at least 8 numbers</label></div>
 			</div>
 			<div class="py-4 text-center">
 				&nbsp;<span class="alert alert-info" *ngIf="showSuccessMessage">Submitted successfully.</span>
 				<span class="alert alert-info" *ngIf="showUpdateMessage">Updated successfully.</span>
 				<span class="alert alert-danger" *ngIf="showDeletedMessage">Deleted successfully.</span>
+				<span class="alert alert-danger" *ngIf="showErrorMessage">Please fill out all required fields.</span>
 			</div>
-			<div class="from-group col-12 text-center pt-1">
+			<div class="form-group col-12 text-center pt-1">
 				<input type="submit" class="btn btn-success" value="Add contact">
 			</div>
 
@@ -31,16 +37,16 @@
 	</div>
 	<div class="col-12 col-lg-6">
 		<form class="form-inline bg-lightgrey justify-content-between">
-        	<input name="searchInput" id="search" class="form-control bg-grey text-light" placeholder="Name" #searchInput="ngModel" [(ngModel)]="searchText" style="width: 75%;">
-        	<button class="btn btn-dark" id="filter" (click)="toggleFilter()" style="width: 22%;">Filter off</button>
+        	<input name="searchInput" id="search" class="form-control bg-grey text-light" placeholder="Name" #searchInput="ngModel" [(ngModel)]="searchText">
+        	<button class="btn btn-dark" id="filter" (click)="toggleFilter()">Filter off</button>
 		</form>
 				
-		<h4>Contacts</h4>
+		<h4 class="pt-2">Contacts</h4>
 		<table  [@listStagger]="phoneBookArray" class="table table-sm table-striped table-dark">
 			<tbody>
 				<ng-container *ngFor="let phoneBook of phoneBookArray">
 					<tr *ngIf="filterCondition(phoneBook)" >
-						<td class="align-middle">{{phoneBook.firstName}} {{phoneBook.lastName}}</td>
+						<td class="pl-2 align-middle">{{phoneBook.firstName}} {{phoneBook.lastName}}</td>
 						<td class="align-middle">{{phoneBook.phoneNumber}}</td>
 						<td class="text-right">
 							<button class="btn btn-success btn-xs mr-2" (click)="phoneBookService.populateForm(phoneBook)">Edit</button>

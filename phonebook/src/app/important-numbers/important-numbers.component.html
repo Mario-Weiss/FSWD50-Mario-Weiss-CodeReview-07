@@ -1,6 +1,47 @@
 <div class="col-12">
 	<h3>Important numbers</h3>
 </div>
-<div class="col-12">
-		<img src="https://via.placeholder.com/350x150" alt="">
+
+<div class="d-flex flex-wrap" [@listStagger]="phoneBookArray">
+	<ng-container *ngFor="let entry of phoneBookArray">
+		<div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3 text-center">
+			<div>
+				<img src="assets/img/{{entry.img}}" alt="">
+			</div>
+			<div>
+				<h2>{{entry.name}}</h2>
+				<a href="tel:{{entry.phone}}"><i class="fas fa-phone"></i> {{entry.phone}}</a>	
+			</div>	
+		</div>
+	</ng-container>
+
+
 </div>
+
+<!--
+<form class="px-2 py-3 bg-grey" [formGroup]="this.phoneBookService.formtest" (ngSubmit)="onSubmit()">
+			<input type="hidden" formControlName="$key">
+			<div class="d-flex flex-wrap pt-2">	
+				<div class="form-group col-6">
+					<label>Name</label>
+					<input formControlName="name" class="form-control">
+				</div>
+              	
+				<div class="form-group col-6">
+					<label>image</label>
+					<input formControlName="img" class="form-control">
+				</div>
+				
+			</div>
+			<div class="form-group col-12 pt-3 pb-1">
+				<label>Phone number</label>
+				<input formControlName="phone" class="form-control">
+			</div>
+			<div class="form-group col-12 text-center pt-1">
+				<input type="submit" class="btn btn-success" value="Add contact">
+			</div>
+
+		</form>
+-->
+
+
