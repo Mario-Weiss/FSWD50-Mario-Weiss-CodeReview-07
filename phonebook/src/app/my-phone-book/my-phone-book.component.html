@@ -47,7 +47,7 @@
 				<ng-container *ngFor="let phoneBook of phoneBookArray">
 					<tr *ngIf="filterCondition(phoneBook)" >
 						<td class="pl-2 align-middle">{{phoneBook.firstName}} {{phoneBook.lastName}}</td>
-						<td class="align-middle">{{phoneBook.phoneNumber}}</td>
+						<td class="align-middle"><a href="tel:{{phoneBook.phoneNumber}}">{{phoneBook.phoneNumber}}</a></td>
 						<td class="text-right">
 							<button class="btn btn-success btn-xs mr-2" (click)="phoneBookService.populateForm(phoneBook)">Edit</button>
 							<button class="btn btn-danger btn-xs my-1" (click)="onDelete(phoneBook.$key)">Delete</button>
