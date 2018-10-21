@@ -1,6 +1,14 @@
 <div class="d-flex flex-wrap">
 	<div class="col-12 col-lg-6 mb-3">
 		<h3>My phone book</h3>
+	</div>
+	<div class="col-12 col-lg-6 mb-3">
+		<form class="form-inline bg-lightgrey justify-content-between">
+        	<input name="searchInput" id="search" class="form-control bg-grey text-light" placeholder="Name" #searchInput="ngModel" [(ngModel)]="searchText">
+        	<button class="btn btn-dark" id="filter" (click)="toggleFilter()">Filter off</button>
+		</form>
+	</div>
+	<div class="col-12 col-lg-6 mb-3 order-2 order-lg-1">
 		<h4 class="pt-2">New contact</h4>
 		<form class="px-2 py-3 bg-grey" [formGroup]="this.phoneBookService.form" (ngSubmit)="onSubmit()">
 			<input type="hidden" formControlName="$key">
@@ -35,12 +43,7 @@
 
 		</form>
 	</div>
-	<div class="col-12 col-lg-6">
-		<form class="form-inline bg-lightgrey justify-content-between">
-        	<input name="searchInput" id="search" class="form-control bg-grey text-light" placeholder="Name" #searchInput="ngModel" [(ngModel)]="searchText">
-        	<button class="btn btn-dark" id="filter" (click)="toggleFilter()">Filter off</button>
-		</form>
-				
+	<div class="col-12 col-lg-6 order-1 order-lg-2">			
 		<h4 class="pt-2">Contacts</h4>
 		<table  [@listStagger]="phoneBookArray" class="table table-sm table-striped table-dark">
 			<tbody>
